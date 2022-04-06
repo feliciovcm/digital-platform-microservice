@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+directive @key(fields: String!) on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
 type Product {
   id: ID!
   title: String!
@@ -28,14 +38,14 @@ enum PurchaseStatus {
   APPROVED
 }
 
-type Customer {
-  id: ID!
+type User {
+  authUserId: ID!
   purchases: [Purchase!]!
 }
 
 type Query {
   products: [Product!]!
-  me: Customer!
+  me: User!
   purchases: [Purchase!]!
 }
 

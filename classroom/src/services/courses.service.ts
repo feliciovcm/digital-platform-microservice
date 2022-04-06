@@ -6,6 +6,11 @@ import { StudentsService } from './students.service';
 
 interface ICreateCourses {
   title: string;
+  slug?: string;
+}
+
+interface IFindCourseBySlug {
+  slug: string;
 }
 
 interface IFindbyCourseAndStudent {
@@ -33,12 +38,12 @@ export class CoursesService {
     });
   }
 
-  async createCourses({ title }: ICreateCourses) {
-    const slug = slugify(title, { lower: true });
+  async createCourses({ title, slug }: ICreateCourses) {
+    const courseSlug = slug ?? slugify(title, { lower: true });
 
     const courseWithSameSlug = await this.prisma.course.findUnique({
       where: {
-        slug,
+        slug: courseSlug,
       },
     });
 
@@ -48,7 +53,7 @@ export class CoursesService {
 
     return this.prisma.course.create({
       data: {
-        slug,
+        slug: courseSlug,
         title,
       },
     });
@@ -71,5 +76,13 @@ export class CoursesService {
     }
 
     return this.findCourseById(id);
+  }
+
+  findCourseBySlug({ slug }: IFindCourseBySlug) {
+    return this.prisma.course.findUnique({
+      where: {
+        slug,
+      },
+    });
   }
 }
