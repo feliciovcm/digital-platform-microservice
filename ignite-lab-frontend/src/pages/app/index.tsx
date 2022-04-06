@@ -1,5 +1,4 @@
-import { getSession, useUser, withPageAuthRequired } from "@auth0/nextjs-auth0"
-import { GetServerSideProps } from "next";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0"
 
 export default function AppHome() {
   const {user} = useUser();
